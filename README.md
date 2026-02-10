@@ -29,7 +29,7 @@ $ hidden-lake-client -k {{HLK-address}} -p {{HLS=pinger-address}} -m {{HLS=messe
 # [-f, --filesharer] = address of the HLS=filesharer internal address (default localhost:9541)
 ```
 
-> [!IMPORTANT]
+> [!WARNING]
 > Please do not connect to Hidden Lake services outside of the `localhost` environment if you are not sure about the security of your network. Connecting via a local network is not secure if the router is connected to a service provider. Moreover, it is not safe to connect to services from the global network (connect uses pure HTTP protocol)!
 
 ## Screenshots
