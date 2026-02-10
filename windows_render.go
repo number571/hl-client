@@ -220,7 +220,7 @@ func listenMessages(w fyne.Window, friend string) {
 				return
 			default:
 			}
-			msg, err := hlmClient.ListenChat(ctx, friend, "hidden-lake-client")
+			msg, err := hlmClient.ListenChat(ctx, friend, "hl-client")
 			if err != nil {
 				select {
 				case <-ctx.Done():

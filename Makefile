@@ -12,9 +12,9 @@ build:
 			fyne-cross $${platform} -arch=$${arch} --app-id hidden.lake.client --icon images/icons/icon.png; \
 			if [[ $$platform == "windows" ]] \
 			then \
-				cp fyne-cross/bin/$${platform}-$${arch}/hidden-lake-client.exe ./bin/hidden-lake-client_$${arch}_$${platform}.exe; \
+				cp fyne-cross/bin/$${platform}-$${arch}/hl-client.exe ./bin/hl-client_$${arch}_$${platform}.exe; \
 			else \
-				cp fyne-cross/bin/$${platform}-$${arch}/hidden-lake-client ./bin/hidden-lake-client_$${arch}_$${platform}; \
+				cp fyne-cross/bin/$${platform}-$${arch}/hl-client ./bin/hl-client_$${arch}_$${platform}; \
 			fi; \
 		done; \
 	done;

@@ -1,4 +1,4 @@
-module github.com/number571/hidden-lake-client
+module github.com/number571/hl-client
 
 go 1.24.5
 

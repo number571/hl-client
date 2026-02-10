@@ -1,11 +1,11 @@
-# hidden-lake-client
+# hl-client
 
 > Client for anonymous network «Hidden Lake» written in Go &amp; Fyne
 
 ## Installation
 
 ```bash
-$ go install github.com/number571/hidden-lake-client@latest
+$ go install github.com/number571/hl-client@latest
 ```
 
 ## How it works
@@ -22,7 +22,7 @@ To send a text message, used `HLS API` of HLS=messenger. To send a file, used th
 ## Running options
 
 ```bash 
-$ hidden-lake-client -k {{HLK-address}} -p {{HLS=pinger-address}} -m {{HLS=messenger-address}} -f {{HLS=filesharer-address}}
+$ hl-client -k {{HLK-address}} -p {{HLS=pinger-address}} -m {{HLS=messenger-address}} -f {{HLS=filesharer-address}}
 # [-k, --kernel]     = address of the HLK internal address (default localhost:9572)
 # [-p, --pinger]     = address of the HLS=pinger internal address (default localhost:9551)
 # [-m, --messenger]  = address of the HLS=messenger internal address (default localhost:9591)
