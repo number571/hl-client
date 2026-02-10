@@ -14,7 +14,7 @@ var (
 )
 
 func main() {
-	a := app.NewWithID("hidden-lake-client")
+	a := app.NewWithID("hidden.lake.client")
 
 	w := a.NewWindow("Hidden Lake Client")
 	w.Resize(fyne.NewSize(600, 400))

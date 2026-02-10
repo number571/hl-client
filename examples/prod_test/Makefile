@@ -10,6 +10,10 @@ copy:
 		./node2/hlk.key
 run:
 	docker-compose build
+	docker-compose up -d
+	docker-compose cp ./node1 node1_hlc:/hidden-lake
+	docker-compose cp ./node2 node2_hlc:/hidden-lake
+	docker-compose restart
 	docker-compose up
 clean:
 	rm -f ./node1/hlk.db ./node2/hlk.db

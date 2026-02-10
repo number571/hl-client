@@ -12,7 +12,6 @@ $ go install github.com/number571/hidden-lake-client@latest
 
 - Windows (x86_64, arm64)
 - Linux (x86_64, arm64)
-- MacOS (x86_64, arm64)
 
 ## Running options
 
