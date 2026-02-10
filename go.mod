@@ -1,4 +1,4 @@
-module github.com/number571/noname-messenger
+module github.com/number571/hidden-lake-client
 
 go 1.24.5
 
