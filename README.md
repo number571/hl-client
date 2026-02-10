@@ -8,6 +8,12 @@
 $ go install github.com/number571/hidden-lake-client@latest
 ```
 
+## How it works
+
+The `Hidden Lake Client` connects to four Hidden Lake services: HLK (kernel), HLS=pinger, HLS=messenger, HLS=filesharer. 
+
+To send a text message, used `HLS API` of HLS=messenger. To send a file, used the combination HLS=messenger + HLS=filesharer - the file is first uploaded to the local storage, then a link to this file is sent to the interlocutor using HLS=messenger, the interlocutor in turn downloads the file from the remote storage of a friend. `HLK API` is used to edit connections and friend list.
+
 ## Supported platforms
 
 - Windows (x86_64, arm64)
@@ -23,6 +29,9 @@ $ hidden-lake-client -k {{HLK-address}} -p {{HLS=pinger-address}} -m {{HLS=messe
 # [-f, --filesharer] = address of the HLS=filesharer internal address (default localhost:9541)
 ```
 
+> [!IMPORTANT]
+> Please do not connect to Hidden Lake services outside of the `localhost` environment if you are not sure about the security of your network. Connecting via a local network is not secure if the router is connected to a service provider. Moreover, it is not safe to connect to services from the global network (connect uses pure HTTP protocol)!
+
 ## Screenshots
 
 <table>
@@ -36,7 +45,7 @@ $ hidden-lake-client -k {{HLK-address}} -p {{HLS=pinger-address}} -m {{HLS=messe
  <tr>
 
   <td>
-  
+
    ![about.png](./images/screenshots/about.png)
   
   </td>
