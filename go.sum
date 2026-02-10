@@ -55,8 +55,8 @@ github.com/niemeyer/pretty v0.0.0-20200227124842-a10e7caefd8e h1:fD57ERR4JtEqsWb
 github.com/niemeyer/pretty v0.0.0-20200227124842-a10e7caefd8e/go.mod h1:zD1mROLANZcx1PVRCS0qkT7pwLkGfwJo4zjcN/Tysno=
 github.com/number571/go-peer v1.7.11 h1:GkZa5i1hiXleZ7arf3QIxrElZ3jSaJGYG9lj00C7LwA=
 github.com/number571/go-peer v1.7.11/go.mod h1:gs7Q7gHQvZgN/q5SS8VdFjW3Bj8S1I1+ya66CMG9OOI=
-github.com/number571/hidden-lake v1.10.2-0.20260209151155-008d3f663707 h1:tUSTKN05EiQcWrQXBOJrCBzHuv7W33NkE4R2eimPnH0=
-github.com/number571/hidden-lake v1.10.2-0.20260209151155-008d3f663707/go.mod h1:4Odb8qFuaO3qiTju++UeOyRQcQoTi60pjmyAkAVfqZo=
+github.com/number571/hidden-lake v1.10.2 h1:6N2pg4QiPVGOFhwvMvLAoVxTqMNNJB0UUtiw80IfvLg=
+github.com/number571/hidden-lake v1.10.2/go.mod h1:4Odb8qFuaO3qiTju++UeOyRQcQoTi60pjmyAkAVfqZo=
 github.com/pkg/profile v1.7.0 h1:hnbDkaNWPCLMO9wGLdBFTIZvzDrDfBM2072E1S9gJkA=
 github.com/pkg/profile v1.7.0/go.mod h1:8Uer0jas47ZQMJ7VD+OHknK4YDY07LPUC6dEvqDjvNo=
 github.com/pmezard/go-difflib v1.0.0 h1:4DBwDE0NGyQoBHbLQYPwSUPoCMWR5BEzIk/f1lZbAQM=
