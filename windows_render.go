@@ -22,7 +22,7 @@ import (
 
 var (
 	inputFriendNameEntry    *widget.Entry
-	inputFriendPubKeyEntry  *widget.Entry
+	inputFriendPubKeyEntry  *pubKeyEntry
 	inputConnectionEntry    *widget.Entry
 	inputMessageEntry       *widget.Entry
 	connectionSettingsLabel *widget.Label

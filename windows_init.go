@@ -165,7 +165,7 @@ func initWindowFriends(a fyne.App, w fyne.Window) *fyne.Container {
 	inputFriendNameEntry = widget.NewEntry()
 	inputFriendNameEntry.SetPlaceHolder("Type a name...")
 
-	inputFriendPubKeyEntry = widget.NewEntry()
+	inputFriendPubKeyEntry = newPubKeyEntry(a)
 	inputFriendPubKeyEntry.SetPlaceHolder("Type a key...")
 
 	sendButton := widget.NewButtonWithIcon("", theme.MailForwardIcon(), func() {
@@ -174,7 +174,7 @@ func initWindowFriends(a fyne.App, w fyne.Window) *fyne.Container {
 			dialog.ShowError(errors.New("invalid alias name"), w)
 			return
 		}
-		pubKey := asymmetric.LoadPubKey(inputFriendPubKeyEntry.Text)
+		pubKey := asymmetric.LoadPubKey(inputFriendPubKeyEntry.content())
 		if pubKey == nil {
 			dialog.ShowError(errors.New("invalid public key"), w)
 			return
@@ -562,4 +562,51 @@ func initWindowChatList(a fyne.App, w fyne.Window) *fyne.Container {
 
 	w.SetCloseIntercept(func() { a.Quit() })
 	return contentContainerWrapper
+}
+
+type pubKeyEntry struct {
+	widget.Entry
+	app        fyne.App
+	actualText string
+}
+
+func newPubKeyEntry(app fyne.App) *pubKeyEntry {
+	entry := &pubKeyEntry{app: app}
+	entry.ExtendBaseWidget(entry)
+	return entry
+}
+
+func (e *pubKeyEntry) content() string {
+	return e.actualText
+}
+
+func (e *pubKeyEntry) TypedKey(key *fyne.KeyEvent) {
+	if key.Name == fyne.KeyBackspace {
+		e.actualText = ""
+		e.SetText("")
+	}
+}
+
+func (e *pubKeyEntry) TypedRune(r rune) {
+	e.actualText = ""
+	e.SetText("!allow only pasting!")
+}
+
+func (e *pubKeyEntry) TypedShortcut(shortcut fyne.Shortcut) {
+	switch shortcut.ShortcutName() {
+	case "Copy":
+		e.app.Clipboard().SetContent(e.actualText)
+	case "Cut":
+		e.app.Clipboard().SetContent(e.actualText)
+		e.actualText = ""
+		e.SetText("")
+	case "Paste":
+		content := e.app.Clipboard().Content()
+		if asymmetric.LoadPubKey(content) == nil {
+			e.SetText("!invalid public key!")
+			return
+		}
+		e.actualText = content
+		e.SetText("PubKey{...}")
+	}
 }
