@@ -26,16 +26,33 @@ func initWindowAbout(a fyne.App, w fyne.Window) *fyne.Container {
 		func() { setChatListContent(w) },
 	)
 
-	versionGrid := container.NewGridWithColumns(
+	versionLabel := widget.NewLabel(clientVersion)
+	versionLabel.Importance = widget.WarningImportance
+
+	clientVersionGrid := container.NewGridWithColumns(
 		2,
 		widget.NewLabel("Version"),
-		widget.NewLabel(version),
+		versionLabel,
 	)
-	versionGrid.Objects[1].(*widget.Label).Importance = widget.WarningImportance
 
-	coloredVersionGridContainer := container.NewStack(
+	hlVersionLabel := widget.NewLabel(hiddenLakeVersion)
+	hlVersionLabel.Importance = widget.WarningImportance
+
+	hiddenLakeVersionGrid := container.NewGridWithColumns(
+		2,
+		widget.NewLabel("Hidden Lake"),
+		hlVersionLabel,
+	)
+
+	versionsContainer := container.NewGridWithRows(
+		2,
+		clientVersionGrid,
+		hiddenLakeVersionGrid,
+	)
+
+	coloredVersionsContainer := container.NewStack(
 		canvas.NewRectangle(color.RGBA{R: 0, G: 0, B: 0, A: 100}),
-		versionGrid,
+		versionsContainer,
 	)
 
 	aboutBodyContainer = container.NewGridWithRows(
@@ -107,7 +124,7 @@ func initWindowAbout(a fyne.App, w fyne.Window) *fyne.Container {
 	)
 
 	innerContent := container.NewVBox(
-		coloredVersionGridContainer,
+		coloredVersionsContainer,
 		coloredAboutBodyLabelContainer,
 		coloredHyperlinkWithLabels,
 	)

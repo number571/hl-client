@@ -4,14 +4,14 @@ go 1.24.5
 
 require (
 	fyne.io/fyne/v2 v2.7.1
-	github.com/number571/go-peer v1.7.11
-	github.com/number571/hidden-lake v1.10.2
+	github.com/number571/go-peer v1.7.15
+	github.com/number571/hidden-lake v1.10.5-0.20260410080415-1fd52408493e
 )
 
 require (
 	fyne.io/systray v1.11.1-0.20250603113521-ca66a66d8b58 // indirect
 	github.com/BurntSushi/toml v1.5.0 // indirect
-	github.com/cloudflare/circl v1.6.1 // indirect
+	github.com/cloudflare/circl v1.6.3 // indirect
 	github.com/davecgh/go-spew v1.1.1 // indirect
 	github.com/fredbi/uri v1.1.1 // indirect
 	github.com/fsnotify/fsnotify v1.9.0 // indirect

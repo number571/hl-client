@@ -190,12 +190,26 @@ func pushMessage(w fyne.Window, friend, msg string) {
 }
 
 func loadMessages(w fyne.Window, friend string) {
-	msgs, err := hlmClient.LoadMessages(context.Background(), friend, 2048, 2048, true)
+	const load = 256
+
+	ctx := context.Background()
+	count, err := hlmClient.GetChatSize(ctx, friend)
 	if err != nil {
 		dialog.ShowError(err, w)
 		return
 	}
-	for _, msg := range msgs {
+
+	index := uint64(0)
+	if count >= load {
+		index = count - load
+	}
+
+	for ; index < count; index++ {
+		msg, err := hlmClient.LoadMessage(ctx, friend, index)
+		if err != nil {
+			dialog.ShowError(err, w)
+			return
+		}
 		addMessageToChat(w, friend, msg)
 	}
 }
