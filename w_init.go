@@ -31,7 +31,7 @@ func initWindowAbout(a fyne.App, w fyne.Window) *fyne.Container {
 
 	clientVersionGrid := container.NewGridWithColumns(
 		2,
-		widget.NewLabel("Version"),
+		widget.NewLabel("Client version"),
 		versionLabel,
 	)
 
@@ -40,7 +40,7 @@ func initWindowAbout(a fyne.App, w fyne.Window) *fyne.Container {
 
 	hiddenLakeVersionGrid := container.NewGridWithColumns(
 		2,
-		widget.NewLabel("Hidden Lake"),
+		widget.NewLabel("Hidden Lake version"),
 		hlVersionLabel,
 	)
 
