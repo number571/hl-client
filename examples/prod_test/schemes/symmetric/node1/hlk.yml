@@ -1,0 +1,22 @@
+settings:
+  crypto_scheme_type: symmetric
+  message_size_bytes: 8192
+  fetch_timeout_ms: 60000
+  queue_period_ms: 5000
+  work_size_bits: 18
+  network_key: oi4r9NW9Le7fKF9d
+logging:
+- info
+- warn
+- erro
+address:
+  external: 127.0.0.1:8571
+  internal: :8572
+services:
+  hls-filesharer: 127.0.0.1:8542
+  hls-messenger: 127.0.0.1:8592
+  hls-pinger: 127.0.0.1:8552
+endpoints:
+- 127.0.0.1:8522
+friends:
+  Bob: aabbccddeeff11223344556677889900aabbccddeeff11223344556677889900

@@ -22,7 +22,7 @@ import (
 
 var (
 	inputFriendNameEntry    *widget.Entry
-	inputFriendPubKeyEntry  *pubKeyEntry
+	inputFriendPKeyEntry    *pubKeyEntry
 	inputConnectionEntry    *widget.Entry
 	inputMessageEntry       *widget.Entry
 	connectionSettingsLabel *widget.Label
@@ -94,7 +94,7 @@ func setChatFriendContent(w fyne.Window, friend string) {
 func clearAfterSwitch() {
 	inputConnectionEntry.SetText("")
 	inputFriendNameEntry.SetText("")
-	inputFriendPubKeyEntry.SetText("")
+	inputFriendPKeyEntry.SetText("")
 	inputMessageEntry.SetText("")
 	scrollChatContainer.Content.(*fyne.Container).RemoveAll()
 	if chatListenerActive {
@@ -129,8 +129,14 @@ func getServicesState(_ fyne.Window) {
 }
 
 func getFriends(w fyne.Window) {
+	ctx := context.Background()
 	gFriends = []string{}
-	friends, err := hlkClient.GetFriends(context.Background())
+	settings, err := hlkClient.GetSettings(ctx)
+	if err != nil {
+		dialog.ShowError(err, w)
+		return
+	}
+	friends, err := hlkClient.GetFriends(ctx, settings.GetCryptoSchemeType())
 	if err != nil {
 		dialog.ShowError(err, w)
 		return

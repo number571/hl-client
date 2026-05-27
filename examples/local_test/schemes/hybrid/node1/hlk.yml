@@ -1,3 +1,5 @@
+settings:
+  crypto_scheme_type: hybrid
 logging:
 - info
 - warn

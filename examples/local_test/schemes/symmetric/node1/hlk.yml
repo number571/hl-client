@@ -1,0 +1,17 @@
+settings:
+  crypto_scheme_type: symmetric
+logging:
+- info
+- warn
+- erro
+address:
+  external: 127.0.0.1:8571
+  internal: :8572
+services:
+  hls-filesharer: 127.0.0.1:8542
+  hls-messenger: 127.0.0.1:8592
+  hls-pinger: 127.0.0.1:8552
+endpoints:
+- 127.0.0.1:8522
+friends:
+  Bob: aabbccddeeff11223344556677889900aabbccddeeff11223344556677889900

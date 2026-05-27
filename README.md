@@ -12,7 +12,7 @@ $ go install github.com/number571/hl-client@latest
 
 The `Hidden Lake Client` connects to four Hidden Lake services: HLK (kernel), HLS=pinger, HLS=messenger, HLS=filesharer. 
 
-- To edit connections / friends lists, get public key, used API of the `HLK`
+- To edit connections / friends lists, used API of the `HLK`
 - To ping a friend, used API of the `HLS=pinger`
 - To send a text message, used API of the `HLS=messenger `
 - To send a file, used API of the `HLS=messenger + HLS=filesharer`

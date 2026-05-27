@@ -1,4 +1,4 @@
-ROOPATH=./../..
+ROOPATH=./../../../..
 .PHONY: default copy run clean stop
 default: copy run 
 copy:
@@ -11,9 +11,16 @@ copy:
 run:
 	docker-compose build
 	docker-compose up -d
+
+	# INFO: remove generated pub keys
+	docker-compose exec node1_hlc rm /hidden-lake/node1/hlk.key.pub
+	docker-compose exec node2_hlc rm /hidden-lake/node2/hlk.key.pub
+
+	# INFO: copy all node directories
 	docker-compose cp ./hla_tcp hla_tcp:/hidden-lake
 	docker-compose cp ./node1 node1_hlc:/hidden-lake
 	docker-compose cp ./node2 node2_hlc:/hidden-lake
+
 	docker-compose restart
 	docker-compose up
 clean:

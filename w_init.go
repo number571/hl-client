@@ -15,8 +15,8 @@ import (
 	"fyne.io/fyne/v2/layout"
 	"fyne.io/fyne/v2/theme"
 	"fyne.io/fyne/v2/widget"
-	"github.com/number571/go-peer/pkg/crypto/asymmetric"
 	"github.com/number571/go-peer/pkg/crypto/random"
+	"github.com/number571/hidden-lake/pkg/api/kernel/client/scheme"
 )
 
 func initWindowAbout(a fyne.App, w fyne.Window) *fyne.Container {
@@ -155,48 +155,30 @@ func initWindowFriends(a fyne.App, w fyne.Window) *fyne.Container {
 		func() { setChatListContent(w) },
 	)
 
-	pubKeyButton := widget.NewButtonWithIcon(
-		"Copy my public key",
-		theme.ContentCopyIcon(),
-		func() {
-			pubKey, err := hlkClient.GetPubKey(context.Background())
-			if err != nil {
-				dialog.ShowError(err, w)
-				return
-			}
-			a.Clipboard().SetContent(pubKey.ToString())
-			dialog.ShowInformation(
-				"Copying a public key...",
-				"The public key has been successfully copied to the clipboard",
-				w,
-			)
-		},
-	)
-	pubKeyButton.Importance = widget.LowImportance
-
-	coloredPubKeyButtonContainer := container.NewStack(
-		canvas.NewRectangle(color.RGBA{R: 0, G: 0, B: 0, A: 100}),
-		pubKeyButton,
-	)
-
 	inputFriendNameEntry = widget.NewEntry()
 	inputFriendNameEntry.SetPlaceHolder("Type a name...")
 
-	inputFriendPubKeyEntry = newPubKeyEntry(a)
-	inputFriendPubKeyEntry.SetPlaceHolder("Type a key...")
+	inputFriendPKeyEntry = newPKeyEntry(a)
+	inputFriendPKeyEntry.SetPlaceHolder("Type a key...")
 
 	sendButton := widget.NewButtonWithIcon("", theme.MailForwardIcon(), func() {
+		ctx := context.Background()
 		aliasName := inputFriendNameEntry.Text
 		if aliasName == "" {
 			dialog.ShowError(errors.New("invalid alias name"), w)
 			return
 		}
-		pubKey := asymmetric.LoadPubKey(inputFriendPubKeyEntry.content())
+		settings, err := hlkClient.GetSettings(ctx)
+		if err != nil {
+			dialog.ShowError(err, w)
+			return
+		}
+		pubKey := scheme.LoadParticipantKey(settings.GetCryptoSchemeType(), inputFriendPKeyEntry.content())
 		if pubKey == nil {
 			dialog.ShowError(errors.New("invalid public key"), w)
 			return
 		}
-		if err := hlkClient.AddFriend(context.Background(), aliasName, pubKey); err != nil {
+		if err := hlkClient.AddFriend(ctx, aliasName, pubKey); err != nil {
 			dialog.ShowError(err, w)
 			return
 		}
@@ -206,7 +188,7 @@ func initWindowFriends(a fyne.App, w fyne.Window) *fyne.Container {
 	inputFriendNameEntry.OnSubmitted = func(s string) {
 		sendButton.Tapped(nil)
 	}
-	inputFriendPubKeyEntry.OnSubmitted = func(s string) {
+	inputFriendPKeyEntry.OnSubmitted = func(s string) {
 		sendButton.Tapped(nil)
 	}
 
@@ -262,7 +244,13 @@ func initWindowFriends(a fyne.App, w fyne.Window) *fyne.Container {
 			friendButton := item.(*fyne.Container).Objects[2].(*widget.Button)
 			friendButton.SetText(friend)
 			friendButton.OnTapped = func() {
-				friendsMap, err := hlkClient.GetFriends(context.Background())
+				ctx := context.Background()
+				settings, err := hlkClient.GetSettings(ctx)
+				if err != nil {
+					dialog.ShowError(err, w)
+					return
+				}
+				friendsMap, err := hlkClient.GetFriends(ctx, settings.GetCryptoSchemeType())
 				if err != nil {
 					dialog.ShowError(err, w)
 					return
@@ -274,8 +262,8 @@ func initWindowFriends(a fyne.App, w fyne.Window) *fyne.Container {
 				}
 				a.Clipboard().SetContent(pubKey.ToString())
 				dialog.ShowInformation(
-					"Copying a friends public key...",
-					"The public key has been successfully copied to the clipboard",
+					"Copying a friend's participant key...",
+					"The participant key has been successfully copied to the clipboard",
 					w,
 				)
 			}
@@ -285,21 +273,15 @@ func initWindowFriends(a fyne.App, w fyne.Window) *fyne.Container {
 	inputBarInner := container.NewGridWithColumns(
 		3,
 		inputFriendNameEntry,
-		inputFriendPubKeyEntry,
+		inputFriendPKeyEntry,
 		sendButton,
 	)
 
-	inputBar := container.New(
-		layout.NewBorderLayout(coloredPubKeyButtonContainer, nil, nil, nil),
-		coloredPubKeyButtonContainer,
-		inputBarInner,
-	)
-
 	content := container.New(
-		layout.NewBorderLayout(header, inputBar, nil, nil),
+		layout.NewBorderLayout(header, inputBarInner, nil, nil),
 		header,
 		friendsList,
-		inputBar,
+		inputBarInner,
 	)
 
 	minSizeTarget := canvas.NewRectangle(color.Transparent)
@@ -587,7 +569,7 @@ type pubKeyEntry struct {
 	actualText string
 }
 
-func newPubKeyEntry(app fyne.App) *pubKeyEntry {
+func newPKeyEntry(app fyne.App) *pubKeyEntry {
 	entry := &pubKeyEntry{app: app}
 	entry.ExtendBaseWidget(entry)
 	return entry
@@ -619,11 +601,16 @@ func (e *pubKeyEntry) TypedShortcut(shortcut fyne.Shortcut) {
 		e.SetText("")
 	case "Paste":
 		content := e.app.Clipboard().Content()
-		if asymmetric.LoadPubKey(content) == nil {
-			e.SetText("!invalid public key!")
+		settings, err := hlkClient.GetSettings(context.Background())
+		if err != nil {
+			e.SetText("got error from HLK")
+			return
+		}
+		if scheme.LoadParticipantKey(settings.GetCryptoSchemeType(), content) == nil {
+			e.SetText("!invalid participant key!")
 			return
 		}
 		e.actualText = content
-		e.SetText("PubKey{...}")
+		e.SetText("ParticipantKey{...}")
 	}
 }
