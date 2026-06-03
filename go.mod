@@ -4,8 +4,8 @@ go 1.24.5
 
 require (
 	fyne.io/fyne/v2 v2.7.1
-	github.com/number571/go-peer v1.7.16
-	github.com/number571/hidden-lake v1.11.1
+	github.com/number571/go-peer v1.7.17
+	github.com/number571/hidden-lake v1.11.2-0.20260603051722-e92ab3875b3f
 )
 
 require (
